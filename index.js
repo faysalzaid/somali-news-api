@@ -3,18 +3,21 @@ const express = require('express')
 const cheerio = require('cheerio')
 const axios = require('axios')
 const _ = require('lodash')
-
+const PORT = process.env.PORT||3000
 
 const app = express()
 
 
+app.set('view engine','ejs')
+app.use(express.static(__dirname+'/public'))
 
-
-app.get('',(req,res)=>{
-    res.send('working')
-})
 
 const articles =[]
+
+
+app.get('/',(req,res)=>{
+    res.render('index',{})
+})
 app.get('/war',(req,res)=>{
     axios.get('https://www.bbc.com/somali')
     .then((response)=>{
@@ -50,7 +53,7 @@ app.get('/war/:detail',async(req,res)=>{
 })
 
 
-app.listen(3000,()=>{
+app.listen(PORT,()=>{
     console.log('Server Working');
 })
 
